@@ -25,9 +25,9 @@ export default function RootLayout({
             <SignedIn>
               <Navbar />
               <SidebarDemo />
+              <main className="sm:pt-28 sm:px-10 md:pt-10 md:px-30">{children}</main>
             </SignedIn>
           </header>
-          <main>{children}</main>
         </body>
       </html>
     </ClerkProvider>

@@ -46,7 +46,7 @@ export function SidebarDemo() {
   ];
 
   return (
-    <Sidebar open={open} setOpen={setOpen} className="fixed inset-0 bg-black text-white sm:hidden">
+    <Sidebar open={open} setOpen={setOpen} className="fixed inset-0 bg-white text-white sm:hidden">
       <SidebarBody className="flex flex-col h-screen p-4 justify-between bg-black ">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           {open ? <Logo /> : <LogoIcon />}
