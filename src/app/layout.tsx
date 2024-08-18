@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignedIn } from '@clerk/nextjs'
 import { Navbar } from "@/components/Navbar";
+import { SidebarDemo } from "@/components/SideBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           <header>
             <SignedIn>
               <Navbar />
+              <SidebarDemo />
             </SignedIn>
           </header>
           <main>{children}</main>

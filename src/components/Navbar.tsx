@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
+import { Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
 import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
+import { motion } from "framer-motion";
 
 export function Navbar() {
   return (
-    <div className="relative w-full flex items-center justify-center">
+    <div className="relative w-full items-center justify-center hidden sm:flex">
       <NavbarD className="top-2" />
     </div>
   );
@@ -13,40 +15,47 @@ export function Navbar() {
 
 function NavbarD({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
+
   return (
     <div
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
-      <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="CollabTodo">
-          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
-            <ProductItem
-              title="Home"
-              href="/"
-              src="https://assets.aceternity.com/demos/algochurn.webp"
-              description="Prepare for tech interviews like never before."
-            />
-            <ProductItem
-              title="Organisations"
-              href="/organisations"
-              src="https://assets.aceternity.com/demos/tailwindmasterkit.webp"
-              description="Production ready Tailwind css components for your next project"
-            />
-            <ProductItem
-              title="MYTodo"
-              href="/mytodo"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png"
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Friends"
-              href="/friends"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png"
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            />
-          </div>
-        </MenuItem>
-      </Menu>
+      <div className="flex justify-between items-center bg-black p-2 rounded-full border border-white shadow-lg">
+        <Menu setActive={setActive} className="flex-1 flex justify-center">
+          <MenuItem setActive={setActive} active={active} item="CollabTodo">
+            <div className="text-sm grid grid-cols-2 gap-10 p-4">
+              <ProductItem
+                title="Home"
+                href="/"
+                description="Back To Home"
+              />
+              <ProductItem
+                title="Organisations"
+                href="/organisations"
+                description="Have a look at all the organisations"
+              />
+              <ProductItem
+                title="MYTodo"
+                href="/mytodo"
+                description="Here Is Your Todo List"
+              />
+              <ProductItem
+                title="Friends"
+                href="/friends"
+                description="Look At Your Friends"
+              />
+            </div>
+          </MenuItem>
+        </Menu>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="ml-4"
+        >
+          <UserButton />
+        </motion.div>
+      </div>
     </div>
   );
 }
