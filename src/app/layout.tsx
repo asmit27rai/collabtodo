@@ -25,7 +25,7 @@ export default function RootLayout({
           <header className="flex flex-row overflow-hidden">
             <SignedIn>
               <Sidebar />
-              <main className="flex-1 p-4 sm:p-6 md:p-8">
+              <main className="flex-1 ml-6 p-0 sm:p-8 md:p-8">
                 {children}
               </main>
             </SignedIn>

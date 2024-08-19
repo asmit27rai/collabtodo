@@ -32,8 +32,8 @@ const Content: React.FC<ContentProps> = ({ title, description, imageSrc }) => {
       <Image
         src={imageSrc}
         alt="Feature Image"
-        height={200}
-        width={200}
+        height={100}
+        width={100}
         className="w-full md:w-3/4 h-auto object-contain mb-4"
       />
       <div className="text-center">
