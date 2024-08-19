@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
-import Sidebar from "@/components/SIdebar";
+import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +22,12 @@ export default function RootLayout({
     >
       <html lang="en">
         <body>
-          <header>
+          <header className="flex flex-row overflow-hidden">
             <SignedIn>
               <Sidebar />
-              <main className="mt-8 mx-4">{children}</main>
+              <main className="flex-1 p-4 sm:p-6 md:p-8">
+                {children}
+              </main>
             </SignedIn>
           </header>
         </body>
