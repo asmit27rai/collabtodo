@@ -1,109 +1,52 @@
-"use client";
-import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
-import {
-  IconHome,
-  IconBriefcase,
-  IconChecklist,
-  IconUsers,
-} from "@tabler/icons-react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { UserButton } from "@clerk/nextjs";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { FaHome, FaBuilding, FaListAlt, FaUserFriends } from 'react-icons/fa';
+import { UserButton } from '@clerk/nextjs';
 
-export function SidebarDemo() {
-  const [open, setOpen] = useState(false);
+import { cn } from '@/lib/utils';
 
-  const links = [
-    {
-      label: "Home",
-      href: "/",
-      icon: (
-        <IconHome className="text-white h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Organisations",
-      href: "/organisations",
-      icon: (
-        <IconBriefcase className="text-white h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "MYTodo",
-      href: "/mytodo",
-      icon: (
-        <IconChecklist className="text-white h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Friends",
-      href: "/friends",
-      icon: (
-        <IconUsers className="text-white h-5 w-5 flex-shrink-0" />
-      ),
-    },
+const Sidebar = () => {
+  const pathname = usePathname();
+
+  const sidebarLinks = [
+    { label: 'Home', route: '/', icon: FaHome },
+    { label: 'Organisations', route: '/organisations', icon: FaBuilding },
+    { label: 'MYTodo', route: '/mytodo', icon: FaListAlt },
+    { label: 'Friends', route: '/friends', icon: FaUserFriends },
   ];
 
   return (
-    <Sidebar open={open} setOpen={setOpen} className="fixed inset-0 bg-white text-white sm:hidden">
-      <SidebarBody className="flex flex-col h-screen p-4 justify-between bg-black ">
-        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          {open ? <Logo /> : <LogoIcon />}
-          <div className="mt-8 flex flex-col gap-4">
-            {links.map((link, idx) => (
-              <SidebarLink
-                key={idx}
-                link={{
-                  ...link,
-                  icon: (
-                    <div className="flex items-center justify-center h-6 w-6 bg-gray-800 rounded-full shadow-md">
-                      {link.icon}
-                    </div>
-                  ),
-                }}
-              />
-            ))}
-          </div>
-          <div className="mt-auto flex flex-col items-center">
-            <UserButton
-            />
-          </div>
-        </div>
-      </SidebarBody>
-    </Sidebar>
-  );
-}
+    <section className="sticky left-0 top-0 flex h-screen w-fit flex-col justify-between bg-dark-1 text-white border-r border-gray-700 lg:w-[264px] shadow-lg pt-6">
+      <div className="flex flex-1 flex-col gap-4">
+        {sidebarLinks.map((item) => {
+          const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`);
 
-export const Logo = () => {
-  return (
-    <Link
-      href="#"
-      className="font-normal flex space-x-2 items-center text-lg text-white py-2 relative z-20"
-    >
-      <div className="h-8 w-8 bg-gray-800 rounded-full flex items-center justify-center">
-        <span className="text-white font-bold text-lg">C</span>
+          return (
+            <Link
+              href={item.route}
+              key={item.label}
+              className={cn(
+                'flex flex-col items-center gap-2 p-3 rounded-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-md',
+                {
+                  'bg-blue-500 text-white': isActive,
+                  'text-gray-300': !isActive,
+                }
+              )}
+            >
+              <item.icon size={24} className="transition-transform duration-300 hover:scale-110" />
+              <p className="text-[8px] font-semibold lg:text-base">
+                {item.label}
+              </p>
+            </Link>
+          );
+        })}
       </div>
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-medium text-white whitespace-pre"
-      >
-        CollabTodo
-      </motion.span>
-    </Link>
+      <div className="flex justify-center mb-6 p-4">
+        <UserButton />
+      </div>
+    </section>
   );
-}
+};
 
-export const LogoIcon = () => {
-  return (
-    <Link
-      href="/"
-      className="font-normal flex space-x-2 items-center text-lg text-white py-2 relative z-20"
-    >
-      <div className="h-8 w-8 bg-gray-800 rounded-full flex items-center justify-center">
-        <span className="text-white font-bold text-lg">C</span>
-      </div>
-    </Link>
-  );
-}
+export default Sidebar;

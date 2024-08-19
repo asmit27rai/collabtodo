@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider, SignedIn } from '@clerk/nextjs'
-import { Navbar } from "@/components/Navbar";
-import { SidebarDemo } from "@/components/SideBar";
+import { ClerkProvider, SignedIn } from "@clerk/nextjs";
+import Sidebar from "@/components/SIdebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    >
       <html lang="en">
         <body>
           <header>
             <SignedIn>
-              <Navbar />
-              <SidebarDemo />
-              <main className="sm:pt-28 sm:px-10 md:pt-10 md:px-30">{children}</main>
+              <Sidebar />
+              <main className="mt-8 mx-4">{children}</main>
             </SignedIn>
           </header>
         </body>
