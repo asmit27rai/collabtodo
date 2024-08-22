@@ -4,60 +4,25 @@ import React, { useState } from 'react';
 import { HoverEffect } from '@/components/ui/card-hover-effect';
 import { Modal, ModalBody, ModalFooter, ModalTrigger } from '@/components/ui/animated-modal';
 import { AiOutlinePlus } from 'react-icons/ai'; 
+import { api } from '../../convex/_generated/api';
+import { useMutation, useQuery } from 'convex/react';
 
 export const Organisations = () => {
-  const [orgs, setOrgs] = useState([
-    {
-      id: "1",
-      title: "Stripe",
-      description: "A technology company that builds economic infrastructure for the internet.",
-      link: "/organisations/1",
-      admin: "John Doe",
-    },
-    {
-      id: "2",
-      title: "GitHub",
-      description: "A development platform to host and review code, manage projects, and build software.",
-      link: "/organisations/2",
-      admin: "Jane Smith",
-    },
-    {
-      id: "3",
-      title: "OpenAI",
-      description: "An AI research and deployment company with a mission to ensure that artificial general intelligence benefits all of humanity.",
-      link: "/organisations/3",
-      admin: "Alice Johnson",
-    },
-    {
-      id: "4",
-      title: "Netflix",
-      description: "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more.",
-      link: "/organisations/4",
-      admin: "Bob Williams",
-    },
-    {
-      id: "5",
-      title: "Google",
-      description: "A global technology company focused on services and products related to the internet, including a search engine, online advertising, and more.",
-      link: "/organisations/5",
-      admin: "Charlie Brown",
-    },
-  ]);
-
-  const [modalOpen, setModalOpen] = useState(false);
   const [newOrg, setNewOrg] = useState({ title: '', description: '', admin: '' });
+
+  const createOrgnisation = useMutation(api.organisations.createOrgnisation);
+  const organisations = useQuery(api.organisations.getOrganisations);
 
   const handleSubmit = () => {
     if (newOrg.title && newOrg.description && newOrg.admin) {
-      const newId = (orgs.length + 1).toString();
       const newOrgData = {
-        id: newId,
-        ...newOrg,
-        link: `/organisations/${newId}`,
+        title: newOrg.title,
+        description: newOrg.description,
+        admin: newOrg.admin,
       };
-      setOrgs([...orgs, newOrgData]);
-      setModalOpen(false);
+      createOrgnisation(newOrgData);
       setNewOrg({ title: '', description: '', admin: '' });
+
     } else {
       alert("Please fill in all fields.");
     }
@@ -107,7 +72,7 @@ export const Organisations = () => {
               <ModalFooter className="gap-4">
                 <button
                   type="button"
-                  onClick={() => setModalOpen(false)}
+                  onClick={() => setNewOrg({ title: '', description: '', admin: '' })}
                   className="px-4 py-2 bg-gray-600 text-white rounded-md border border-gray-300 hover:bg-gray-700"
                 >
                   Cancel
@@ -123,7 +88,13 @@ export const Organisations = () => {
           </div>
         </ModalBody>
       </Modal>
-      <HoverEffect items={orgs} />
+      {organisations && <HoverEffect items={organisations.map(org => ({
+        _id: org._id.toString(),
+        title: org.title,
+        description: org.description,
+        link: `/organisations/${org._id}`,
+        admin: org.admin
+      }))} />}
     </div>
   );
 };
