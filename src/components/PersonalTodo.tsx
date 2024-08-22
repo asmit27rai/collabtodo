@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Meteors } from './ui/meteors';
 
 type Todo = {
-  id: number;
+  _id: string;
   title: string;
   description: string;
 };
