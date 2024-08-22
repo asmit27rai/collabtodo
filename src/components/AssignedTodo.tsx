@@ -23,6 +23,13 @@ const AssignedTodo: React.FC<AssignedTodoProps> = ({ todo }) => {
     setTodoCompleted(!todoCompleted);
   };
 
+  // Ensure consistent date formatting
+  const formattedDate = todo.DueDate.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
   return (
     <div className="">
       <div className="w-full relative max-w-xs">
@@ -61,7 +68,7 @@ const AssignedTodo: React.FC<AssignedTodoProps> = ({ todo }) => {
               <strong>Organization:</strong> {todo.Organization}
             </p>
             <p>
-              <strong>Due Date:</strong> {todo.DueDate.toLocaleDateString()}
+              <strong>Due Date:</strong> {formattedDate}
             </p>
           </div>
 
