@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import { Meteors } from "./ui/meteors";
 
+// Define the type for Todo
 type Todo = {
-  id: number;
+  _id: string;  // Use _id as per the data structure
   title: string;
   description: string;
-  Assignee: string;
-  Organization: string;
-  DueDate: Date;
+  assigned: string;
+  organizationName: string;
 };
 
 type AssignedTodoProps = {
@@ -22,13 +22,6 @@ const AssignedTodo: React.FC<AssignedTodoProps> = ({ todo }) => {
   const handleComplete = () => {
     setTodoCompleted(!todoCompleted);
   };
-
-  // Ensure consistent date formatting
-  const formattedDate = todo.DueDate.toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  });
 
   return (
     <div className="">
@@ -62,13 +55,7 @@ const AssignedTodo: React.FC<AssignedTodoProps> = ({ todo }) => {
 
           <div className="font-normal text-base text-slate-400 mb-4 relative z-50">
             <p>
-              <strong>Assignee:</strong> {todo.Assignee}
-            </p>
-            <p>
-              <strong>Organization:</strong> {todo.Organization}
-            </p>
-            <p>
-              <strong>Due Date:</strong> {formattedDate}
+              <strong>Organization:</strong> {todo.organizationName}
             </p>
           </div>
 

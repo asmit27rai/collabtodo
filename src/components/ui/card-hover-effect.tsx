@@ -13,7 +13,7 @@ export const HoverEffect = ({
     _id: string;
     title: string;
     description: string;
-    link: string;
+    link: string; // Ensure 'link' is included
     admin: string;
   }[];
   className?: string;
@@ -29,8 +29,8 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <Link
-          href={item?.link}
-          key={item?._id}
+          href={item.link}
+          key={item._id}
           className="relative group block p-2 h-full w-full border border-white rounded-3xl overflow-hidden"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
